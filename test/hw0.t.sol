@@ -14,7 +14,7 @@ interface IHW0 {
 contract HW0Test is Test {
     IHW0 public hw0;
     MerkleTree public tree;
-    address alex = vm.addr(1);
+    address alex = vm.envAddress("MY_ADDRESS");
 
     string[] public elements = [
         "zkplayground",
@@ -29,19 +29,18 @@ contract HW0Test is Test {
         "zkpomelo"
     ];
 
-    function setUp() public { 
+    function setUp() public {
         hw0 = IHW0(vm.envAddress("CONTRACT_ADDRESS"));
         tree = new MerkleTree(elements);
-        vm.deal(alex, 0.001 ether);
     }
 
     function testSolution() public {
         vm.startPrank(alex);
 
-        (bool res, ) = vm.envAddress("CONTRACT_ADDRESS").call{value: 0.001 ether}("");
+        (bool res,) = vm.envAddress("CONTRACT_ADDRESS").call{value: 0.001 ether}("");
         require(res, "Fail to transfer ETH!");
         assertEq(hw0.solved1(alex), true);
-        
+
         hw0.merkleProof(tree.getProof(0));
         assertEq(hw0.solved2(alex), true);
 

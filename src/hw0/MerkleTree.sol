@@ -67,10 +67,10 @@ contract MerkleTree {
         return node[node.length - 1].data;
     }
 
-    function getProof(uint256 leafIndex) public returns(bytes32[] memory) {
+    function getProof(uint256 leafIndex) public returns (bytes32[] memory) {
         require(leafIndex < numLeaves, "MerkleTree: Out of the Index!");
 
-        delete proof; // initialize proof 
+        delete proof; // initialize proof
         uint256 currentIdx = leafIndex;
         while (node[currentIdx].parentsIdx < node.length) {
             if (node[currentIdx].siblingsIdx < node.length) {

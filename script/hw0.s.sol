@@ -43,6 +43,5 @@ contract HW0Script is Script {
         assert(hw0.solved2(vm.envAddress("MY_ADDRESS")));
 
         vm.stopBroadcast();
-
     }
 }
